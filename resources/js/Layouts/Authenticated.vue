@@ -18,6 +18,9 @@
                                 <BreezeNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </BreezeNavLink>
+                                <BreezeNavLink :href="route('companies.index')" :active="route().current('companies.index')">
+                                    Companies
+                                </BreezeNavLink>
                             </div>
                         </div>
 
@@ -64,6 +67,9 @@
                         <BreezeResponsiveNavLink :href="route('dashboard')" :active="route().current('dashboard')">
                             Dashboard
                         </BreezeResponsiveNavLink>
+                        <BreezeNavLink :href="route('companies.index')" :active="route().current('companies.index')">
+                            Companies
+                        </BreezeNavLink>
                     </div>
 
                     <!-- Responsive Settings Options -->
