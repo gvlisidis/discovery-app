@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\CompanyResource;
 use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
+use App\Models\Company;
 use App\Models\Role;
 use App\Models\User;
 use Inertia\Inertia;
@@ -22,12 +24,14 @@ class UserController extends Controller
     public function create()
     {
         return Inertia::render('Users/UserCreate', [
-            'roles' => RoleResource::collection(Role::all())
+            'roles' => Role::query()->select('id', 'name')->get()->pluck('name', 'id'),
+            'companies' => Company::query()->select('id', 'name')->get()->pluck('name', 'id'),
         ]);
     }
 
     public function store(StoreUserRequest $request)
     {
+        dd($request->all());
        User::create($request->validated());
 
         return redirect()->route('users.index')->with('status', 'User created successfully!');

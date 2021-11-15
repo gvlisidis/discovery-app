@@ -27,9 +27,8 @@
                             </div>
 
                             <div class="mt-4">
-                                <label class="font-medium text-sm text-gray-700">Role</label>
+                                <label class="font-medium text-sm text-gray-700">Assign Role</label>
                                 <select id="role_id" v-model="form.role_id"  class="ml-4 rounded border-gray-300">
-                                    <option disabled value="">Assign Role</option>
                                     <option v-for="role in roles.data" :key="role.id" :value="role.id" :selected="role.id === form.role_id">{{ role.name }}</option>
                                 </select>
                             </div>
