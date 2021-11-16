@@ -28,9 +28,9 @@
                                              required autocomplete="username"/>
                             </div>
 
-                            <div class="mt-4 flex">
+                            <div class="mt-4 flex w-full">
                                 <div class="flex">
-                                    <label class="mr-6 my-auto font-medium text-sm text-gray-700">Assign Role</label>
+                                    <label class="w-24 my-auto font-medium text-sm text-gray-700">Assign Role</label>
                                     <Multiselect
                                         v-model="form.role_id"
                                         :options="roles"
@@ -38,36 +38,24 @@
                                         :closeOnSelect="true"
                                         :classes="{
                                                 container: 'relative mx-auto w-36 flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
-                                                spacer: 'h-10 py-px box-content',
+                                                spacer: 'h-9 box-content',
                                                 }"
                                     />
-<!--                                    <select id="role_id" v-model="form.role_id" required-->
-<!--                                            class="ml-4 h-10 rounded border-gray-300">-->
-<!--                                        <option v-for="role in roles.data" :key="role.id" :value="role.id" :selected="role.id === 1">{{-->
-<!--                                                role.name-->
-<!--                                            }}-->
-<!--                                        </option>-->
                                 </div>
-                                <div class="ml-24 flex">
-                                    <label class="mr-6 my-auto font-medium text-sm text-gray-700">Assign to Companies</label>
+                                <div class="ml-12 flex w-full">
+                                    <label class=" mr-2 w-40 my-auto font-medium text-sm text-gray-700">Assign to Companies</label>
                                     <Multiselect
-                                        v-model="form.company_id"
+                                        v-model="form.company_ids"
                                         :options="companies"
                                         mode="tags"
+                                        searchable="true"
                                         :closeOnSelect="true"
                                         :classes="{
-                                                container: 'relative mx-auto w-96 flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
-                                                spacer: 'h-10 py-px box-content',
+                                                container: 'relative mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
+                                                spacer: 'h-9 box-content',
                                                 }"
                                     />
-
-
-                                    <!--                                    <select id="company_id" v-model="form.company_id" multiple class="ml-4 rounded border-gray-300">-->
-                                    <!--                                        <option value="">Assign Companies</option>-->
-                                    <!--                                        <option v-for="company in companies.data" :key="company.id" :value="company.id">{{ company.name }}</option>-->
-                                    <!--                                    </select>-->
                                 </div>
-
                             </div>
 
                             <div class="mt-4">
@@ -130,7 +118,7 @@ export default {
                 password: '',
                 password_confirmation: '',
                 role_id: '',
-                company_id: [],
+                company_ids: [],
             }),
             options: [
                 'Batman',

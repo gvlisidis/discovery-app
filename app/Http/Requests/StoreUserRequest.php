@@ -27,8 +27,9 @@ class StoreUserRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
-            //'password' => ['required', 'confirmed', Rules\Password::defaults()],
-            'role_id' => 'required|integer'
+            'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role_id' => ['required', 'integer', 'exists:App\Models\Role,id'],
+            'company_ids' => ['sometimes', 'array', 'exists:App\Models\Company,id'],
         ];
     }
 }

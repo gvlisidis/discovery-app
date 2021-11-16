@@ -31,8 +31,15 @@ class UserController extends Controller
 
     public function store(StoreUserRequest $request)
     {
-        dd($request->all());
-       User::create($request->validated());
+        $data = $request->validated();
+        $user = User::create([
+            'name' => $data['name'],
+            'email' => $data['email'],
+            'password' => bcrypt($data['password']),
+            'role_id' => $data['role_id'],
+        ]);
+
+        $user->companies()->sync($data['company_ids']);
 
         return redirect()->route('users.index')->with('status', 'User created successfully!');
     }
@@ -40,7 +47,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         return Inertia::render('Users/UserEdit', [
-            'roles' => RoleResource::collection(Role::all()),
+            'roles' => Role::query()->select('id', 'name')->get()->pluck('name', 'id'),
+            'companies' => Company::query()->select('id', 'name')->get()->pluck('name', 'id'),
             'user' => new UserResource($user),
         ]);
     }
@@ -53,6 +61,8 @@ class UserController extends Controller
         }
 
         $user->update($data);
+
+        $user->companies()->sync($data['company_ids']);
 
         return redirect()->route('users.index')->with('status', 'User updated successfully!');
     }

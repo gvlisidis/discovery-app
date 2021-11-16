@@ -28,7 +28,8 @@ class UpdateUserRequest extends FormRequest
             'name' => ['required', 'string','max:255'],
             'email' => ['required', 'string', 'email', 'max:255'],
             'password' => ['sometimes', 'confirmed'],
-            'role_id' => ['required', 'integer'],
+            'role_id' => ['required', 'integer', 'exists:App\Models\Role,id'],
+            'company_ids' => ['sometimes', 'array', 'exists:App\Models\Company,id'],
         ];
     }
 }

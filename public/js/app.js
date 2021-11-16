@@ -20068,7 +20068,7 @@ __webpack_require__.r(__webpack_exports__);
         password: '',
         password_confirmation: '',
         role_id: '',
-        company_id: []
+        company_ids: []
       }),
       options: ['Batman', 'Robin', 'Joker']
     };
@@ -20106,6 +20106,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Components_Dropdown__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @/Components/Dropdown */ "./resources/js/Components/Dropdown.vue");
 /* harmony import */ var _Components_Label__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @/Components/Label */ "./resources/js/Components/Label.vue");
 /* harmony import */ var _Components_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @/Components/ValidationErrors */ "./resources/js/Components/ValidationErrors.vue");
+/* harmony import */ var _vueform_multiselect__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @vueform/multiselect */ "./node_modules/@vueform/multiselect/dist/multiselect.js");
+
 
 
 
@@ -20121,11 +20123,13 @@ __webpack_require__.r(__webpack_exports__);
     BreezeDropdown: _Components_Dropdown__WEBPACK_IMPORTED_MODULE_4__["default"],
     BreezeValidationErrors: _Components_ValidationErrors__WEBPACK_IMPORTED_MODULE_6__["default"],
     BreezeAuthenticatedLayout: _Layouts_Authenticated_vue__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Multiselect: _vueform_multiselect__WEBPACK_IMPORTED_MODULE_7__["default"],
     Head: _inertiajs_inertia_vue3__WEBPACK_IMPORTED_MODULE_1__.Head
   },
   props: {
-    roles: Array,
-    user: Object
+    roles: Object,
+    user: Object,
+    companies: Object
   },
   data: function data() {
     return {
@@ -20134,7 +20138,8 @@ __webpack_require__.r(__webpack_exports__);
         email: this.user.data.email,
         password: '',
         password_confirmation: '',
-        role_id: this.user.data.role.id
+        role_id: this.user.data.role.id,
+        company_ids: this.user.data.companies
       })
     };
   },
@@ -22027,24 +22032,24 @@ var _hoisted_6 = {
   "class": "mt-4"
 };
 var _hoisted_7 = {
-  "class": "mt-4 flex"
+  "class": "mt-4 flex w-full"
 };
 var _hoisted_8 = {
   "class": "flex"
 };
 
 var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "mr-6 my-auto font-medium text-sm text-gray-700"
+  "class": "w-24 my-auto font-medium text-sm text-gray-700"
 }, "Assign Role", -1
 /* HOISTED */
 );
 
 var _hoisted_10 = {
-  "class": "ml-24 flex"
+  "class": "ml-12 flex w-full"
 };
 
 var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "mr-6 my-auto font-medium text-sm text-gray-700"
+  "class": "mr-2 w-40 my-auto font-medium text-sm text-gray-700"
 }, "Assign to Companies", -1
 /* HOISTED */
 );
@@ -22130,25 +22135,26 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         closeOnSelect: true,
         classes: {
           container: 'relative mx-auto w-36 flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
-          spacer: 'h-10 py-px box-content'
+          spacer: 'h-9 box-content'
         }
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                    <select id=\"role_id\" v-model=\"form.role_id\" required"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                            class=\"ml-4 h-10 rounded border-gray-300\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                        <option v-for=\"role in roles.data\" :key=\"role.id\" :value=\"role.id\" :selected=\"role.id === 1\">{{"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                                role.name"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                            }}"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                        </option>")]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
-        modelValue: $data.form.company_id,
+      , ["modelValue", "options"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
+        modelValue: $data.form.company_ids,
         "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
-          return $data.form.company_id = $event;
+          return $data.form.company_ids = $event;
         }),
         options: $props.companies,
         mode: "tags",
+        searchable: "true",
         closeOnSelect: true,
         classes: {
-          container: 'relative mx-auto w-96 flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
-          spacer: 'h-10 py-px box-content'
+          container: 'relative mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
+          spacer: 'h-9 box-content'
         }
       }, null, 8
       /* PROPS */
-      , ["modelValue", "options"]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                    <select id=\"company_id\" v-model=\"form.company_id\" multiple class=\"ml-4 rounded border-gray-300\">"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                        <option value=\"\">Assign Companies</option>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                        <option v-for=\"company in companies.data\" :key=\"company.id\" :value=\"company.id\">{{ company.name }}</option>"), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createCommentVNode)("                                    </select>")])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      , ["modelValue", "options"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "password",
         value: "Password"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
@@ -22242,27 +22248,39 @@ var _hoisted_6 = {
   "class": "mt-4"
 };
 var _hoisted_7 = {
-  "class": "mt-4"
+  "class": "mt-4 flex w-full"
+};
+var _hoisted_8 = {
+  "class": "flex"
 };
 
-var _hoisted_8 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
-  "class": "font-medium text-sm text-gray-700"
+var _hoisted_9 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "w-24 my-auto font-medium text-sm text-gray-700"
 }, "Assign Role", -1
 /* HOISTED */
 );
 
-var _hoisted_9 = ["value", "selected"];
 var _hoisted_10 = {
-  "class": "mt-4"
+  "class": "ml-12 flex w-full"
 };
-var _hoisted_11 = {
-  "class": "mt-4"
-};
+
+var _hoisted_11 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("label", {
+  "class": "mr-2 w-40 my-auto font-medium text-sm text-gray-700"
+}, "Assign to Companies", -1
+/* HOISTED */
+);
+
 var _hoisted_12 = {
+  "class": "mt-4"
+};
+var _hoisted_13 = {
+  "class": "mt-4"
+};
+var _hoisted_14 = {
   "class": "flex items-center justify-end mt-4"
 };
 
-var _hoisted_13 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Update ");
+var _hoisted_15 = /*#__PURE__*/(0,vue__WEBPACK_IMPORTED_MODULE_0__.createTextVNode)(" Update ");
 
 function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_Head = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Head");
@@ -22272,6 +22290,8 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
   var _component_BreezeLabel = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeLabel");
 
   var _component_BreezeInput = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeInput");
+
+  var _component_Multiselect = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("Multiselect");
 
   var _component_BreezeButton = (0,vue__WEBPACK_IMPORTED_MODULE_0__.resolveComponent)("BreezeButton");
 
@@ -22287,7 +22307,7 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
       return [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_2, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_3, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_4, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_5, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeValidationErrors, {
         "class": "mb-4"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("form", {
-        onSubmit: _cache[5] || (_cache[5] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
+        onSubmit: _cache[6] || (_cache[6] = (0,vue__WEBPACK_IMPORTED_MODULE_0__.withModifiers)(function () {
           return $options.submit && $options.submit.apply($options, arguments);
         }, ["prevent"]))
       }, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", null, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
@@ -22319,25 +22339,35 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         autocomplete: "email"
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [_hoisted_8, (0,vue__WEBPACK_IMPORTED_MODULE_0__.withDirectives)((0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("select", {
-        id: "role_id",
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_7, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_8, [_hoisted_9, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
+        modelValue: $data.form.role_id,
         "onUpdate:modelValue": _cache[2] || (_cache[2] = function ($event) {
           return $data.form.role_id = $event;
         }),
-        "class": "ml-4 rounded border-gray-300"
-      }, [((0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(true), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)(vue__WEBPACK_IMPORTED_MODULE_0__.Fragment, null, (0,vue__WEBPACK_IMPORTED_MODULE_0__.renderList)($props.roles.data, function (role) {
-        return (0,vue__WEBPACK_IMPORTED_MODULE_0__.openBlock)(), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementBlock)("option", {
-          key: role.id,
-          value: role.id,
-          selected: role.id === $data.form.role_id
-        }, (0,vue__WEBPACK_IMPORTED_MODULE_0__.toDisplayString)(role.name), 9
-        /* TEXT, PROPS */
-        , _hoisted_9);
-      }), 128
-      /* KEYED_FRAGMENT */
-      ))], 512
-      /* NEED_PATCH */
-      ), [[vue__WEBPACK_IMPORTED_MODULE_0__.vModelSelect, $data.form.role_id]])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+        options: $props.roles,
+        closeOnSelect: true,
+        classes: {
+          container: 'relative mx-auto w-36 flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
+          spacer: 'h-9 box-content'
+        }
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_10, [_hoisted_11, (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_Multiselect, {
+        modelValue: $data.form.company_ids,
+        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+          return $data.form.company_ids = $event;
+        }),
+        options: $props.companies,
+        mode: "tags",
+        searchable: "true",
+        closeOnSelect: true,
+        classes: {
+          container: 'relative mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
+          spacer: 'h-9 box-content'
+        }
+      }, null, 8
+      /* PROPS */
+      , ["modelValue", "options"])])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "password",
         value: "Password"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
@@ -22345,13 +22375,13 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         type: "password",
         "class": "mt-1 block w-full",
         modelValue: $data.form.password,
-        "onUpdate:modelValue": _cache[3] || (_cache[3] = function ($event) {
+        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
           return $data.form.password = $event;
         }),
         autocomplete: "new-password"
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_11, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_13, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeLabel, {
         "for": "password_confirmation",
         value: "Confirm Password"
       }), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeInput, {
@@ -22359,20 +22389,20 @@ function render(_ctx, _cache, $props, $setup, $data, $options) {
         type: "password",
         "class": "mt-1 block w-full",
         modelValue: $data.form.password_confirmation,
-        "onUpdate:modelValue": _cache[4] || (_cache[4] = function ($event) {
+        "onUpdate:modelValue": _cache[5] || (_cache[5] = function ($event) {
           return $data.form.password_confirmation = $event;
         }),
         autocomplete: "new-password"
       }, null, 8
       /* PROPS */
-      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_12, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeButton, {
+      , ["modelValue"])]), (0,vue__WEBPACK_IMPORTED_MODULE_0__.createElementVNode)("div", _hoisted_14, [(0,vue__WEBPACK_IMPORTED_MODULE_0__.createVNode)(_component_BreezeButton, {
         "class": (0,vue__WEBPACK_IMPORTED_MODULE_0__.normalizeClass)(["ml-4 bg-green-600", {
           'opacity-25': $data.form.processing
         }]),
         disabled: $data.form.processing
       }, {
         "default": (0,vue__WEBPACK_IMPORTED_MODULE_0__.withCtx)(function () {
-          return [_hoisted_13];
+          return [_hoisted_15];
         }),
         _: 1
         /* STABLE */
@@ -47681,13 +47711,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var _UserEdit_vue_vue_type_template_id_487268a5__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./UserEdit.vue?vue&type=template&id=487268a5 */ "./resources/js/Pages/Users/UserEdit.vue?vue&type=template&id=487268a5");
 /* harmony import */ var _UserEdit_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./UserEdit.vue?vue&type=script&lang=js */ "./resources/js/Pages/Users/UserEdit.vue?vue&type=script&lang=js");
-/* harmony import */ var _Users_georgevlisidis_Sites_projects_discovery_app_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
+/* harmony import */ var _vueform_multiselect_themes_default_css_vue_type_style_index_0_lang_css__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @vueform/multiselect/themes/default.css?vue&type=style&index=0&lang=css */ "./node_modules/@vueform/multiselect/themes/default.css?vue&type=style&index=0&lang=css");
+/* harmony import */ var _Users_georgevlisidis_Sites_projects_discovery_app_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./node_modules/vue-loader/dist/exportHelper.js */ "./node_modules/vue-loader/dist/exportHelper.js");
 
 
 
 
 ;
-const __exports__ = /*#__PURE__*/(0,_Users_georgevlisidis_Sites_projects_discovery_app_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_2__["default"])(_UserEdit_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UserEdit_vue_vue_type_template_id_487268a5__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Pages/Users/UserEdit.vue"]])
+
+
+const __exports__ = /*#__PURE__*/(0,_Users_georgevlisidis_Sites_projects_discovery_app_node_modules_vue_loader_dist_exportHelper_js__WEBPACK_IMPORTED_MODULE_3__["default"])(_UserEdit_vue_vue_type_script_lang_js__WEBPACK_IMPORTED_MODULE_1__["default"], [['render',_UserEdit_vue_vue_type_template_id_487268a5__WEBPACK_IMPORTED_MODULE_0__.render],['__file',"resources/js/Pages/Users/UserEdit.vue"]])
 /* hot reload */
 if (false) {}
 

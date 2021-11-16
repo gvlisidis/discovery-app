@@ -25,13 +25,37 @@
                                 <BreezeLabel for="email" value="Email" />
                                 <BreezeInput id="email" type="email" class="mt-1 block w-full" v-model="form.email"  autocomplete="email"/>
                             </div>
-
-                            <div class="mt-4">
-                                <label class="font-medium text-sm text-gray-700">Assign Role</label>
-                                <select id="role_id" v-model="form.role_id"  class="ml-4 rounded border-gray-300">
-                                    <option v-for="role in roles.data" :key="role.id" :value="role.id" :selected="role.id === form.role_id">{{ role.name }}</option>
-                                </select>
+                            <div class="mt-4 flex w-full">
+                                <div class="flex">
+                                    <label class="w-24 my-auto font-medium text-sm text-gray-700">Assign Role</label>
+                                    <Multiselect
+                                        v-model="form.role_id"
+                                        :options="roles"
+                                        :closeOnSelect="true"
+                                        :classes="{
+                                                container: 'relative mx-auto w-36 flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
+                                                spacer: 'h-9 box-content',
+                                                }"
+                                    />
+                                </div>
+                                <div class="ml-12 flex w-full">
+                                    <label class=" mr-2 w-40 my-auto font-medium text-sm text-gray-700">Assign to Companies</label>
+                                    <Multiselect
+                                        v-model="form.company_ids"
+                                        :options="companies"
+                                        mode="tags"
+                                        searchable="true"
+                                        :closeOnSelect="true"
+                                        :classes="{
+                                                container: 'relative mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
+                                                spacer: 'h-9 box-content',
+                                                }"
+                                    />
+                                </div>
                             </div>
+
+
+
 
                             <div class="mt-4">
                                 <BreezeLabel for="password" value="Password" />
@@ -65,6 +89,7 @@ import BreezeInput from "@/Components/Input";
 import BreezeDropdown from "@/Components/Dropdown";
 import BreezeLabel from "@/Components/Label";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
+import Multiselect from "@vueform/multiselect";
 
 export default {
     components: {
@@ -74,11 +99,13 @@ export default {
         BreezeDropdown,
         BreezeValidationErrors,
         BreezeAuthenticatedLayout,
+        Multiselect,
         Head,
     },
     props: {
-        roles: Array,
+        roles: Object,
         user: Object,
+        companies: Object,
     },
     data() {
         return {
@@ -88,6 +115,7 @@ export default {
                 password: '',
                 password_confirmation: '',
                 role_id: this.user.data.role.id,
+                company_ids: this.user.data.companies,
             })
         }
     },
@@ -101,3 +129,4 @@ export default {
     }
 }
 </script>
+<style src="@vueform/multiselect/themes/default.css"></style>
