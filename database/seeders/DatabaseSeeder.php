@@ -22,15 +22,20 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Role::factory()->create([
-            'name' => 'Partner',
-            'slug' => 'partner',
+            'name' => 'Company Admin',
+            'slug' => 'company-admin',
         ]);
 
-         User::factory()->create([
-             'name' => 'George Vlisidis',
-             'email' => 'gv@mail.com',
-             'role_id' => 1,
-         ]);
+        Role::factory()->create([
+            'name' => 'Company Member',
+            'slug' => 'company-member',
+        ]);
+
+        User::factory()->create([
+            'name' => 'George Vlisidis',
+            'email' => 'gv@mail.com',
+            'role_id' => 1,
+        ]);
 
         User::factory()->create([
             'name' => 'Yas Thompson',
@@ -44,8 +49,16 @@ class DatabaseSeeder extends Seeder
             'role_id' => 1,
         ]);
 
-        User::factory(20)->create();
+       // User::factory(30)->create();
 
-         Company::factory(10)->create();
+        $companies = Company::factory(10)->create();
+
+        foreach ($companies as $company) {
+            $company->users()->attach([1,2,3]);
+            $userAdmin = User::factory()->create(['role_id' => 2]);
+            $company->users()->attach($userAdmin);
+            $userMembers = User::factory(rand(2,6))->create(['role_id' => 3]);
+            $company->users()->attach($userMembers);
+        }
     }
 }

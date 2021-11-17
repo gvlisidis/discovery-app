@@ -2,10 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\FilterUserCompaniesRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-use App\Http\Resources\CompanyResource;
-use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
 use App\Models\Company;
 use App\Models\Role;
@@ -14,11 +13,31 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(FilterUserCompaniesRequest $request)
     {
-        return Inertia::render('Users/UserIndex', [
-            'users' => UserResource::collection(User::all())
-        ]);
+        $authUser = auth()->user();
+        $companyId = $request->company_id;
+        $authUserCompanies = $authUser->companies();
+        $defaultCompany = $authUserCompanies->first();
+
+        if ($authUser->isAdmin()) {
+            $company_id = $companyId ?: 0;
+            $users = $companyId
+                ? $authUserCompanies->where('company_id', $companyId)->get()->first()->users
+                : User::all();
+        } else {
+            $company_id = $companyId ?: $defaultCompany->id;
+            $users = $companyId
+                ? $authUserCompanies->where('company_id', $companyId)->get()->first()->users
+                : $defaultCompany->users;
+        }
+        $data = [
+            'users' => UserResource::collection($users),
+            'companies' => $authUser->companies()->get(),
+            'company_id' => $company_id,
+        ];
+
+        return Inertia::render('Users/UserIndex', $data);
     }
 
     public function create()

@@ -55,6 +55,11 @@
                                                         Edit
                                                     </Link>
                                                     |
+                                                    <Link :href="route('companies.users', { company: company.id })"
+                                                          class="text-blue-700 font-semibold">
+                                                        Users
+                                                    </Link>
+                                                    |
                                                     <Link :href="route('companies.delete', { company: company.id })"
                                                           method="delete" as="button" type="button"
                                                           class="text-red-700 font-semibold">

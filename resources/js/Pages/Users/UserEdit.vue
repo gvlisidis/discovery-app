@@ -33,13 +33,13 @@
                                         :options="roles"
                                         :closeOnSelect="true"
                                         :classes="{
-                                                container: 'relative mx-auto w-36 flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
-                                                spacer: 'h-9 box-content',
+                                                container: 'relative mx-auto w-64 text-sm text-gray-700 flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white leading-snug text-base outline-none',
+                                                spacer: 'h-9  box-content',
                                                 }"
                                     />
                                 </div>
                                 <div class="ml-12 flex w-full">
-                                    <label class=" mr-2 w-40 my-auto font-medium text-sm text-gray-700">Assign to Companies</label>
+                                    <label class="w-44 my-auto font-medium text-sm text-gray-700">Assign Companies</label>
                                     <Multiselect
                                         v-model="form.company_ids"
                                         :options="companies"
@@ -53,9 +53,6 @@
                                     />
                                 </div>
                             </div>
-
-
-
 
                             <div class="mt-4">
                                 <BreezeLabel for="password" value="Password" />

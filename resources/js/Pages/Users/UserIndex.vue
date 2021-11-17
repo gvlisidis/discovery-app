@@ -12,17 +12,25 @@
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                     <div class="p-6 bg-white border-b border-gray-200">
-                        <div v-if="$page.props.flash.message" class="bg-green-100 px-2 py-1 font-semibold text-sm rounded-xl">
+                        <div v-if="$page.props.flash.message"
+                             class="bg-green-100 px-2 py-1 font-semibold text-sm rounded-xl">
                             {{ $page.props.flash.message }}
                         </div>
-
-                        <!-- This example requires Tailwind CSS v2.0+ -->
 
                         <div class="flex flex-col">
                             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                                    <div class="m-5">
-                                        <a href="/users/create" class="bg-green-300 px-4 py-2 rounded-xl">Create</a>
+                                    <div class="flex items-center mb-2">
+                                        <select v-model="company_id"
+                                                class="w-64 text-sm text-gray-700 border border-gray-300 rounded bg-white text-base leading-snug outline-none">
+                                            <option v-if="authUser.role_id === 1" value="0">All</option>
+                                            <option v-for="company in companies" :key="company.id" :value="company.id">
+                                                {{ company.name }}
+                                            </option>
+                                        </select>
+                                        <div class="ml-2">
+                                            <a href="/users/create" class="bg-green-300 px-4 py-2 rounded-xl">Create</a>
+                                        </div>
                                     </div>
                                     <div class="shadow overflow-hidden border-b border-gray-200 sm:rounded-lg">
                                         <table class="min-w-full divide-y divide-gray-200">
@@ -64,9 +72,10 @@
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                                    {{ user.role.name }}
+                                                    {{ roleText(user) }}
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <td v-if="((authUser.role_id === 1) || (authUser.role_id === 2 && user.role.id !== 1) )"
+                                                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <Link :href="route('users.edit', { user: user.id })"
                                                           class="text-green-700 font-semibold">
                                                         Edit
@@ -95,16 +104,41 @@
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
 import {Head, Link} from '@inertiajs/inertia-vue3';
+import {usePage} from '@inertiajs/inertia-vue3'
+import {Inertia} from '@inertiajs/inertia'
+import {ref, watch} from 'vue';
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Link,
+        usePage,
         Head,
     },
+
     props: {
         users: Object,
-        session_message: '',
+        session_message: null,
+        companies: Array,
+        company_id: String,
+    },
+
+    setup(props) {
+        let authUser = usePage().props.value.auth.user;
+        let company_id = ref(props.company_id);
+
+        watch(company_id, value => {
+            Inertia.get('/users', {company_id: value});
+        })
+
+        function roleText(user) {
+            return user.role.id === 1 ? 'MMC Member' : user.role.name;
+        }
+
+
+        return {
+            authUser, company_id, roleText,
+        }
     },
 }
 </script>

@@ -14,6 +14,8 @@ class User extends Authenticatable
 {
     use HasApiTokens, HasFactory, Notifiable;
 
+    const ADMIN = 1;
+
     /**
      * The attributes that are mass assignable.
      *
@@ -53,5 +55,10 @@ class User extends Authenticatable
     public function companies(): BelongsToMany
     {
         return $this->belongsToMany(Company::class)->using(CompanyUser::class);
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role_id === self::ADMIN;
     }
 }

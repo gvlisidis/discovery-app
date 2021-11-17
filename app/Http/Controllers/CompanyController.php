@@ -5,7 +5,9 @@ namespace App\Http\Controllers;
 use App\Http\Requests\StoreCompanyRequest;
 use App\Http\Requests\UpdateCompanyRequest;
 use App\Http\Resources\CompanyResource;
+use App\Http\Resources\UserResource;
 use App\Models\Company;
+use App\Models\User;
 use Inertia\Inertia;
 
 class CompanyController extends Controller
@@ -14,6 +16,13 @@ class CompanyController extends Controller
     {
         return Inertia::render('Companies/CompanyIndex',[
             'companies' => CompanyResource::collection(Company::all())
+        ]);
+    }
+
+    public function users(Company $company)
+    {
+        return Inertia::render('Users/UserIndex', [
+            'users' => UserResource::collection($company->users)
         ]);
     }
 
