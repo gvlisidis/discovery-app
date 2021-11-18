@@ -13,9 +13,15 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
+
+    public function __construct()
+    {
+        
+    }
+
     public function index(FilterUserCompaniesRequest $request)
     {
-        $authUser = auth()->user();
+        $authUser = $request->user();
         $companyId = $request->company_id;
         $authUserCompanies = $authUser->companies();
         $defaultCompany = $authUserCompanies->first();

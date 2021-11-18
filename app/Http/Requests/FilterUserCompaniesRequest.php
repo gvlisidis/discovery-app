@@ -14,7 +14,7 @@ class FilterUserCompaniesRequest extends FormRequest
 
     public function rules(): array
     {
-        $companyIds = auth()->user()->isAdmin()
+        $companyIds = $this->user()->isAdmin()
             ? ['0'] + auth()->user()->companies->pluck('id')->toArray()
             : auth()->user()->companies->pluck('id')->toArray();
 
