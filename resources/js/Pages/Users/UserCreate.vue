@@ -35,7 +35,7 @@
                                         v-model="form.role_id"
                                         :options="roles"
                                         selected="2"
-                                        :closeOnSelect="true"
+                                        :closeOnSelect=true
                                         :classes="{
                                                 container: 'relative mx-auto w-64 text-sm text-gray-700  flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
                                                 spacer: 'h-9 box-content',
@@ -48,8 +48,8 @@
                                         v-model="form.company_ids"
                                         :options="companies"
                                         mode="tags"
-                                        searchable="true"
-                                        :closeOnSelect="true"
+                                        :searchable=true
+                                        :closeOnSelect=true
                                         :classes="{
                                                 container: 'relative mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
                                                 spacer: 'h-9 w-18 box-content',
@@ -120,11 +120,6 @@ export default {
                 role_id: '',
                 company_ids: [],
             }),
-            options: [
-                'Batman',
-                'Robin',
-                'Joker',
-            ]
         }
     },
 

@@ -120,7 +120,7 @@ export default {
         users: Object,
         session_message: null,
         companies: Array,
-        company_id: String,
+        company_id: Number,
     },
 
     setup(props) {
