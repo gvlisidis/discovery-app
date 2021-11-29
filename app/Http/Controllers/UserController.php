@@ -13,18 +13,14 @@ use Inertia\Inertia;
 
 class UserController extends Controller
 {
-
-    public function __construct()
-    {
-        
-    }
-
     public function index(FilterUserCompaniesRequest $request)
     {
+       // dd(4555, $request->company_id);
         $authUser = $request->user();
         $companyId = $request->company_id;
         $authUserCompanies = $authUser->companies();
         $defaultCompany = $authUserCompanies->first();
+        //dd($companyId, $authUserCompanies, $defaultCompany);
 
         if ($authUser->isAdmin()) {
             $company_id = $companyId ?: 0;
@@ -39,7 +35,7 @@ class UserController extends Controller
         }
         $data = [
             'users' => UserResource::collection($users),
-            'companies' => $authUser->companies()->get(),
+            'companies' => $authUser->companies,
             'company_id' => $company_id,
         ];
 

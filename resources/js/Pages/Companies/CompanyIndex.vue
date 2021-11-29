@@ -21,7 +21,7 @@
                         <div class="flex flex-col">
                             <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
                                 <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
-                                    <div class="m-5">
+                                    <div class="m-5"  v-if="isAdmin()">
                                         <Link :href="route('companies.create')"
                                               class="bg-green-300 px-4 py-2 rounded-xl">
                                             Create
@@ -49,7 +49,9 @@
                                                         </div>
                                                     </div>
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                <td
+                                                    v-if="(authUser.role_id === 1 || authUser.role_id === 2)"
+                                                    class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <Link :href="route('companies.edit', { company: company.id })"
                                                           class="text-green-700 font-semibold">
                                                         Edit
@@ -82,16 +84,30 @@
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import {Head, Link} from '@inertiajs/inertia-vue3';
+import {Head, Link, usePage} from '@inertiajs/inertia-vue3';
+import {ref, watch} from "vue";
+import {Inertia} from "@inertiajs/inertia";
 
 export default {
     components: {
         BreezeAuthenticatedLayout,
         Head,
         Link,
+        usePage,
     },
     props: {
         companies: Object
+    },
+
+    setup(props) {
+        let authUser = usePage().props.value.auth.user;
+        function isAdmin() {
+            return this.authUser.role_id === 1;
+        }
+
+        return {
+            authUser, isAdmin
+        }
     },
 }
 </script>

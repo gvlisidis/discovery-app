@@ -28,7 +28,7 @@
                                                 {{ company.name }}
                                             </option>
                                         </select>
-                                        <div class="ml-2">
+                                        <div class="ml-2" v-if="isAdmin()">
                                             <a href="/users/create" class="bg-green-300 px-4 py-2 rounded-xl">Create</a>
                                         </div>
                                     </div>
@@ -103,9 +103,8 @@
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import {Head, Link} from '@inertiajs/inertia-vue3';
-import {usePage} from '@inertiajs/inertia-vue3'
-import {Inertia} from '@inertiajs/inertia'
+import {Head, Link, usePage} from '@inertiajs/inertia-vue3';
+import {Inertia} from '@inertiajs/inertia';
 import {ref, watch} from 'vue';
 
 export default {
@@ -120,12 +119,13 @@ export default {
         users: Object,
         session_message: null,
         companies: Array,
-        company_id: Number,
+        company_id: String,
     },
 
     setup(props) {
         let authUser = usePage().props.value.auth.user;
         let company_id = ref(props.company_id);
+        console.log(423423, company_id)
 
         watch(company_id, value => {
             Inertia.get('/users', {company_id: value});
@@ -135,9 +135,12 @@ export default {
             return user.role.id === 1 ? 'MMC Member' : user.role.name;
         }
 
+        function isAdmin() {
+            return this.authUser.role_id === 1;
+        }
 
         return {
-            authUser, company_id, roleText,
+            authUser, company_id, roleText, isAdmin
         }
     },
 }
