@@ -18,7 +18,6 @@ class FilterUserCompaniesRequest extends FormRequest
             ? array_merge([0], auth()->user()->companies->pluck('id')->toArray())
             : auth()->user()->companies->pluck('id')->toArray();
 
-        //dd($companyIds);
         return [
             'company_id' => [Rule::in($companyIds)],
         ];

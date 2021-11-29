@@ -15,12 +15,10 @@ class UserController extends Controller
 {
     public function index(FilterUserCompaniesRequest $request)
     {
-       // dd(4555, $request->company_id);
         $authUser = $request->user();
         $companyId = $request->company_id;
         $authUserCompanies = $authUser->companies();
         $defaultCompany = $authUserCompanies->first();
-        //dd($companyId, $authUserCompanies, $defaultCompany);
 
         if ($authUser->isAdmin()) {
             $company_id = $companyId ?: 0;
