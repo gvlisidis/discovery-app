@@ -74,7 +74,7 @@
                                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                                     {{ roleText(user) }}
                                                 </td>
-                                                <td v-if="(isAdmin || (isPartnerAdmin && user.role.id !== 1) )"
+                                                <td v-if="(isAdmin || (isPartner && user.role.id !== 1) )"
                                                     class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <Link :href="route('users.edit', { user: user.id })"
                                                           class="text-green-700 font-semibold">
@@ -119,11 +119,11 @@ export default {
         users: Object,
         session_message: null,
         companies: Array,
-        company_id: String,
+        company_id: Number,
     },
 
     setup(props) {
-        const {isAdmin, isPartnerAdmin} = userRoles()
+        const {isAdmin, isPartner} = userRoles()
         let company_id = ref(props.company_id);
 
         watch(company_id, value => {
@@ -135,7 +135,7 @@ export default {
         }
 
         return {
-            company_id, roleText, isAdmin, isPartnerAdmin
+            company_id, roleText, isAdmin, isPartner
         }
     },
 }

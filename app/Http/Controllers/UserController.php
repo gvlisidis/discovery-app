@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\FilterUserCompaniesRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Resources\CompanyResource;
 use App\Http\Resources\UserResource;
 use App\Models\Company;
 use App\Models\Role;
@@ -44,12 +45,13 @@ class UserController extends Controller
     {
         return Inertia::render('Users/UserCreate', [
             'roles' => Role::query()->select('id', 'name')->get()->pluck('name', 'id'),
-            'companies' => Company::query()->select('id', 'name')->get()->pluck('name', 'id'),
+            'companies' => CompanyResource::collection(Company::all()),
         ]);
     }
 
     public function store(StoreUserRequest $request)
     {
+        dd($request->all());
         $data = $request->validated();
         $user = User::create([
             'name' => $data['name'],
@@ -67,7 +69,7 @@ class UserController extends Controller
     {
         return Inertia::render('Users/UserEdit', [
             'roles' => Role::query()->select('id', 'name')->get()->pluck('name', 'id'),
-            'companies' => Company::query()->select('id', 'name')->get()->pluck('name', 'id'),
+            'companies' => CompanyResource::collection(Company::all()),
             'user' => new UserResource($user),
         ]);
     }

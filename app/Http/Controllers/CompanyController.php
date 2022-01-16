@@ -22,7 +22,9 @@ class CompanyController extends Controller
     public function users(Company $company)
     {
         return Inertia::render('Users/UserIndex', [
-            'users' => UserResource::collection($company->users)
+            'users' => UserResource::collection($company->users),
+            'companies' => auth()->user()->companies,
+            'company_id' => $company->id,
         ]);
     }
 

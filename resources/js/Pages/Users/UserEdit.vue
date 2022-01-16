@@ -38,20 +38,6 @@
                                                 }"
                                     />
                                 </div>
-                                <div class="ml-12 flex w-full">
-                                    <label class="w-44 my-auto font-medium text-sm text-gray-700">Assign Companies</label>
-                                    <Multiselect
-                                        v-model="form.company_ids"
-                                        :options="companies"
-                                        mode="tags"
-                                        searchable=true
-                                        :closeOnSelect=true
-                                        :classes="{
-                                                container: 'relative mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
-                                                spacer: 'h-9 box-content',
-                                                }"
-                                    />
-                                </div>
                             </div>
 
                             <div class="mt-4">
@@ -62,6 +48,25 @@
                             <div class="mt-4">
                                 <BreezeLabel for="password_confirmation" value="Confirm Password" />
                                 <BreezeInput id="password_confirmation" type="password" class="mt-1 block w-full" v-model="form.password_confirmation" autocomplete="new-password" />
+                            </div>
+
+                            <div class="mt-4 flex w-full">
+                                <div class="flex companies">
+                                    <label class="w-72 my-auto font-medium text-sm text-gray-700">Role To Company</label>
+                                    <select class="w-full border border-gray-300 rounded bg-white text-sm text-gray-700" v-model="company_role">
+                                        <option value="1" >Company Member</option>
+                                        <option value="2" >Company Admin</option>
+                                    </select>
+                                </div>
+                                <div class="ml-12 flex w-full">
+                                    <label class="w-44 my-auto font-medium text-sm text-gray-700">Assign Companies</label>
+                                    <select class="w-full border border-gray-300 rounded bg-white text-sm text-gray-700">
+                                        <option v-for="company in companies.data" :key="company.id" :value="company.id">{{ company.name }}</option>
+                                    </select>
+                                </div>
+                                <div class="ml-4">
+                                    <button class="py-2 px-4 rounded w-18 bg-blue-600 text-white" @click="addCompanyRow">Add</button>
+                                </div>
                             </div>
 
                             <div class="flex items-center justify-end mt-4">
@@ -122,6 +127,10 @@ export default {
             this.form.put(this.route('users.update', {user: this.user.data.id}), {
                 onFinish: () => this.form.reset('password', 'password_confirmation'),
             })
+        },
+
+        addCompanyRow() {
+
         }
     }
 }

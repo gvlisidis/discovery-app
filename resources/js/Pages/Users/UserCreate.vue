@@ -42,20 +42,6 @@
                                                 }"
                                     />
                                 </div>
-                                <div class="ml-12 flex w-full">
-                                    <label class="mr-2 w-44 my-auto font-medium text-sm text-gray-700">Assign Companies</label>
-                                    <Multiselect
-                                        v-model="form.company_ids"
-                                        :options="companies"
-                                        mode="tags"
-                                        :searchable=true
-                                        :closeOnSelect=true
-                                        :classes="{
-                                                container: 'relative mx-auto w-full flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
-                                                spacer: 'h-9 w-18 box-content',
-                                                }"
-                                    />
-                                </div>
                             </div>
 
                             <div class="mt-4">
@@ -68,6 +54,49 @@
                                 <BreezeLabel for="password_confirmation" value="Confirm Password"/>
                                 <BreezeInput id="password_confirmation" type="password" class="mt-1 block w-full"
                                              v-model="form.password_confirmation" required autocomplete="new-password"/>
+                            </div>
+                            <div class="mt-8">
+                                <div v-for="(company, index) in assignedCompanies"  :key="company.id">
+                                    <div class="flex justify-between px-8">
+                                        <div>Assigned to company <span class="text-red-700 font-semibold">{{companies.data[company.company_id - 1].name }}</span>
+                                            as <span class="text-blue-700 font-semibold">{{companyRoleText(company.company_role_id) }}</span></div>
+                                        <button @click.prevent="removeCompany(index)">X</button>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div id="companies_array">
+                                <div class="mt-4 flex w-full" id="companies1">
+                                    <div class="flex">
+                                        <label class="w-72 my-auto font-medium text-sm text-gray-700">Role To
+                                            Company</label>
+                                        <select
+                                            class="w-full border border-gray-300 rounded bg-white text-sm text-gray-700"
+                                            v-model="company_role_id">
+                                            <option value="0"></option>
+                                            <option value="1">Company Member</option>
+                                            <option value="2">Company Admin</option>
+                                        </select>
+                                    </div>
+                                    <div class="ml-12 flex w-full">
+                                        <label class="w-44 my-auto font-medium text-sm text-gray-700">Assign
+                                            Companies</label>
+                                        <select
+                                            class="w-full border border-gray-300 rounded bg-white text-sm text-gray-700"
+                                            v-model="company_id">
+                                            <option value="0"></option>
+                                            <option v-for="company in companies.data" :key="company.id"
+                                                    :value="company.id">{{ company.name }}
+                                            </option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="ml-4">
+                                <button class="py-2 px-4 rounded w-18 bg-blue-600 text-white"
+                                        @click.prevent="addCompanyRow">Add
+                                </button>
                             </div>
 
                             <div class="flex items-center justify-end mt-4">
@@ -87,13 +116,15 @@
 
 <script>
 import BreezeAuthenticatedLayout from '@/Layouts/Authenticated.vue'
-import {Head} from '@inertiajs/inertia-vue3';
+import {Head, useForm} from '@inertiajs/inertia-vue3';
 import BreezeButton from "@/Components/Button";
 import BreezeInput from "@/Components/Input";
 import BreezeDropdown from "@/Components/Dropdown";
 import BreezeLabel from "@/Components/Label";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
 import Multiselect from '@vueform/multiselect'
+import {ref} from "vue";
+
 
 export default {
     components: {
@@ -110,25 +141,54 @@ export default {
         roles: Object,
         companies: Object,
     },
-    data() {
-        return {
-            form: this.$inertia.form({
-                name: '',
-                email: '',
-                password: '',
-                password_confirmation: '',
-                role_id: '',
-                company_ids: [],
-            }),
-        }
-    },
+    setup(props) {
+        const counter = ref(0);
+        const company_id = ref('');
+        const company_role_id = ref('');
+        const assignedCompanies = ref([]);
+        const form = useForm({
+            name: null,
+            email: null,
+            password: null,
+            password_confirmation: null,
+            role_id: null,
+            assignedCompanies: [],
+        });
 
-    methods: {
-        submit() {
-            this.form.post(this.route('users.store'), {
-                onFinish: () => this.form.reset('password', 'password_confirmation'),
+        function submit() {
+            form.assignedCompanies = assignedCompanies.value;
+            form.post('/users', {
+                onFinish: () => form.reset('password', 'password_confirmation'),
             })
         }
+
+        function isDuplicate() {
+            return  assignedCompanies.value.some(el => el.company_id === company_id.value)
+        }
+
+        function companyRoleText(id) {
+            if(id == 1){
+                return 'Member';
+            }
+            if(id == 2){
+                return 'Admin';
+            }
+        }
+
+        function removeCompany(index) {
+            assignedCompanies.value.splice(index, 1);
+        }
+
+        function addCompanyRow() {
+            if ((company_id.value != 0 && company_role_id.value != 0) && !isDuplicate()) {
+                assignedCompanies.value.push({
+                    company_id: company_id.value,
+                    company_role_id: company_role_id.value
+                });
+            }
+        }
+
+        return {counter, company_id, company_role_id, form, assignedCompanies, companyRoleText, submit, removeCompany, addCompanyRow}
     }
 }
 </script>

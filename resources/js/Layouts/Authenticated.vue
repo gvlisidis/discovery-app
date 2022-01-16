@@ -21,7 +21,7 @@
                                 <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                                     Users
                                 </BreezeNavLink>
-                                <BreezeNavLink :href="route('companies.index')" :active="route().current('companies.index')" v-if="$page.props.auth.user.role_id === 1">
+                                <BreezeNavLink :href="route('companies.index')" :active="route().current('companies.index')">
                                     Companies
                                 </BreezeNavLink>
                             </div>
@@ -73,7 +73,7 @@
                         <BreezeNavLink :href="route('users.index')" :active="route().current('users.index')">
                             Users
                         </BreezeNavLink>
-                        <BreezeNavLink :href="route('companies.index')" :active="route().current('companies.index')">
+                        <BreezeNavLink :href="route('companies.index')" :active="route().current('companies.index')"  v-if="$page.props.auth.user.role_id === 1">
                             Companies
                         </BreezeNavLink>
                     </div>

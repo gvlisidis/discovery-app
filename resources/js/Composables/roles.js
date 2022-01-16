@@ -8,15 +8,11 @@ export default function userRoles() {
         return authUser.role_id === 1;
     });
 
-    const isPartnerAdmin = computed(() => {
+    const isPartner = computed(() => {
         return authUser.role_id === 2;
     })
 
-    const isPartnerMember = computed(() => {
-        return authUser.role_id === 3;
-    })
-
     return {
-        isAdmin, isPartnerAdmin, isPartnerMember
+        isAdmin, isPartner
     }
 }

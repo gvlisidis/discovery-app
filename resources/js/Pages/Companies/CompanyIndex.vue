@@ -50,7 +50,7 @@
                                                     </div>
                                                 </td>
                                                 <td
-                                                    v-if="(isAdmin ||isPartnerAdmin)"
+                                                    v-if="(isAdmin ||isPartner)"
                                                     class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                     <Link :href="route('companies.edit', { company: company.id })"
                                                           class="text-green-700 font-semibold">
@@ -98,10 +98,10 @@ export default {
     },
 
     setup(props) {
-        const {isAdmin, isPartnerAdmin} = userRoles()
+        const {isAdmin, isPartner} = userRoles()
 
         return {
-             isAdmin, isPartnerAdmin
+             isAdmin, isPartner
         }
     },
 }
