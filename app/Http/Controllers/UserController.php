@@ -6,6 +6,7 @@ use App\Http\Requests\FilterUserCompaniesRequest;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Resources\CompanyResource;
+use App\Http\Resources\RoleResource;
 use App\Http\Resources\UserResource;
 use App\Models\Company;
 use App\Models\Role;
@@ -44,7 +45,8 @@ class UserController extends Controller
     public function create()
     {
         return Inertia::render('Users/UserCreate', [
-            'roles' => Role::query()->select('id', 'name')->get()->pluck('name', 'id'),
+            //'roles' => Role::query()->select('id', 'name')->get()->reverse()->pluck('name', 'id'),
+            'roles' => RoleResource::collection(Role::all()->reverse()),//   Role::query()->select('id', 'name')->get()->reverse()->pluck('name', 'id'),
             'companies' => CompanyResource::collection(Company::all()),
         ]);
     }

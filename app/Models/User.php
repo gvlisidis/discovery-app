@@ -57,6 +57,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Company::class)->using(CompanyUser::class);
     }
 
+    public function companyRoles(): BelongsToMany
+    {
+        return $this->belongsToMany(CompanyRole::class)->using(CompanyRoleUser::class);
+    }
+
     public function isAdmin(): bool
     {
         return $this->role_id === self::ADMIN;

@@ -27,7 +27,7 @@
                             </div>
                             <div class="mt-4 flex w-full">
                                 <div class="flex">
-                                    <label class="w-24 my-auto font-medium text-sm text-gray-700">Assign Role</label>
+                                    <label class="w-24 my-auto font-medium text-sm text-gray-700">System Role</label>
                                     <Multiselect
                                         v-model="form.role_id"
                                         :options="roles"

@@ -30,17 +30,10 @@
 
                             <div class="mt-4 flex w-full">
                                 <div class="flex">
-                                    <label class="w-24 my-auto font-medium text-sm text-gray-700">Assign Role</label>
-                                    <Multiselect
-                                        v-model="form.role_id"
-                                        :options="roles"
-                                        selected="2"
-                                        :closeOnSelect=true
-                                        :classes="{
-                                                container: 'relative mx-auto w-64 text-sm text-gray-700  flex items-center justify-end box-border cursor-pointer border border-gray-300 rounded bg-white text-base leading-snug outline-none',
-                                                spacer: 'h-9 box-content',
-                                                }"
-                                    />
+                                    <label class="w-24 my-auto font-medium text-sm text-gray-700">System Role</label>
+                                    <select v-model="form.role_id" class="w-48 border border-gray-300 rounded bg-white text-gray-700">
+                                        <option  v-for="role in roles.data" :key="role.id" :value="role.id" >{{ role.name }}</option>
+                                    </select>
                                 </div>
                             </div>
 
@@ -73,18 +66,18 @@
                                         <select
                                             class="w-full border border-gray-300 rounded bg-white text-sm text-gray-700"
                                             v-model="company_role_id">
-                                            <option value="0"></option>
+                                            <option value="0" selected></option>
                                             <option value="1">Company Member</option>
                                             <option value="2">Company Admin</option>
                                         </select>
                                     </div>
                                     <div class="ml-12 flex w-full">
-                                        <label class="w-44 my-auto font-medium text-sm text-gray-700">Assign
-                                            Companies</label>
+                                        <label class="w-44 my-auto font-medium text-sm text-gray-700">Assign to
+                                            Company (Optional)</label>
                                         <select
                                             class="w-full border border-gray-300 rounded bg-white text-sm text-gray-700"
                                             v-model="company_id">
-                                            <option value="0"></option>
+                                            <option value="0" selected></option>
                                             <option v-for="company in companies.data" :key="company.id"
                                                     :value="company.id">{{ company.name }}
                                             </option>
@@ -122,7 +115,6 @@ import BreezeInput from "@/Components/Input";
 import BreezeDropdown from "@/Components/Dropdown";
 import BreezeLabel from "@/Components/Label";
 import BreezeValidationErrors from "@/Components/ValidationErrors";
-import Multiselect from '@vueform/multiselect'
 import {ref} from "vue";
 
 
@@ -134,7 +126,6 @@ export default {
         BreezeDropdown,
         BreezeValidationErrors,
         BreezeAuthenticatedLayout,
-        Multiselect,
         Head,
     },
     props: {
@@ -151,7 +142,7 @@ export default {
             email: null,
             password: null,
             password_confirmation: null,
-            role_id: null,
+            role_id: 2,
             assignedCompanies: [],
         });
 
@@ -192,5 +183,3 @@ export default {
     }
 }
 </script>
-
-<style src="@vueform/multiselect/themes/default.css"></style>
